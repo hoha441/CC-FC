@@ -1,3 +1,40 @@
+Kragen Sitaker kragen@pobox.com
+30 Oct 1999 16:22:16 -0000
+Previous message: "people I know"
+Next message: recursive-descent parser for BNF grammars
+
+The C grammar in K&R 2nd Ed is fairly simple, only about 5 pages.
+Here it is, translated to BNF.  Here ( ) groups, ? means optional, |
+is alternation, + means one or more, * means zero or more, space means
+sequence, and "x" means literal x.  As a special abbreviation, x% means
+x ("," x)* -- that is, a non-null comma-separated list of x's.
+
+I did this with the idea of writing a bare-bones recursive-descent parser
+for the language.  Accordingly, I have eschewed left recursion, and in
+general have eschewed recursion as a method of iteration, preferring
+explicit iteration.  I think the only recursion remaining is where
+recursion is really necessary.  This resulted in the elimination of
+many nonterminals.
+
+I don't know if I will actually carry the implementation as code through,
+though.
+
+Discarded nonterminals: external-declaration struct-or-union
+struct-declaration-list specifier-qualifier-list struct-declarator-list
+enumerator-list init-declarator-list direct-declarator type-qualifier-list
+parameter-list identifier-list initializer-list direct-abstract-declarator
+labeled-statement expression-statement declaration-list statement-list
+primary-expression typedef-name selection-statement
+iteration-statement jump-statement argument-expression-list
+unary-operator asssignment-operator
+Renamed symbols: compound-statement -> block
+
+40 nonterminals; I discarded 25.  Also, I turned typedef-name into a terminal.
+
+Original grammar has a total of 65 nonterminals.
+
+C grammar begins here:
+
 Terminals:
   typedef-name integer-constant character-constant floating-constant
   enumeration-constant identifier
