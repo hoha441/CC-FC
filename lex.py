@@ -4,8 +4,8 @@ import sys
 def identifier(scanner, token): return "IDENT", token
 def operator(scanner, token):   return "OPERATOR", token
 def digit(scanner, token):      return "DIGIT", token
-def comma(scanner, token):  return "COMMA"
-def end_stmnt(scanner, token):  return "END_STATEMENT"
+def comma(scanner, token):  return "COMMA", token
+def end_stmnt(scanner, token):  return "END_STATEMENT", token
 def left_p(scanner, token):  return "LEFT_P",token
 def right_p(scanner, token):  return "RIGHT_P",token
 def left_k(scanner, token):  return "LEFT_K",token
@@ -210,7 +210,24 @@ class Parse:
         raise ValueError("Unknown keyword: {}".format(self.remain[0][1]))
       else:
         raise ValueError("Cannot do anything with: {}".format(self.remain[0][1]) )
+  
+  def statement(self):
+    if (self.expression()):
+      self.accept("END_STATEMENT")
+    elif (self.accept("END_STATEMENT")):
+      pass    
+    elif (self.block()):
+      pass
+    elif (self.remain[0][1] == 'if'):
+      self.accept(self.remain[0][0])
+      self.accept('LEFT_P')
+      if (self.expression()):
+        self.accept('RIGHT_P')
+        if (self.statement()):
+          self.accept('END_STATEMENT')
 
+  def expression(self):
+    pass
   # BNF methods end
 tokens, remainder = scanner.scan("int main(){ a = 1; };")
 #p_left = 0
