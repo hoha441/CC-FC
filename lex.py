@@ -227,8 +227,14 @@ class Parse:
           self.accept('END_STATEMENT')
 
   def expression(self):
-    pass
-  # BNF methods end
+    if (self.assigment-expression()):
+      while(self.remain[0][1]==','):
+        self.assigment-expression()
+    
+  def assignment-expression(self):
+	pass
+
+# BNF methods end
 tokens, remainder = scanner.scan("int main(){ a = 1; };")
 #p_left = 0
 #for token in tokens:
